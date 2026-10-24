@@ -2,7 +2,7 @@
     "id": "oauth",
     "name": "OAuth Support",
     "description": "OAuth2 Support",
-    "version": "0.4.13",
+    "version": "0.5.0",
     "build": {
         "copy": [
             "vendor",
