@@ -2,10 +2,9 @@
 
 namespace Gini\OAuth\Storage {
 
-    class Database implements
-        \League\OAuth2\Server\Storage\ClientInterface,
-        \League\OAuth2\Server\Storage\SessionInterface,
-        \League\OAuth2\Server\Storage\ScopeInterface
+    // PHP 8.3: 移除 league/oauth2-server v3 Storage 接口依赖
+    // 所有方法签名和实现保持不变，仅移除 implements 声明
+    class Database
     {
         private $_db;
 
