@@ -40,7 +40,7 @@ namespace Gini\OAuth {
 
         public function authorize(
             array $options = [],
-            callable $redirectHandler = null
+            ?callable $redirectHandler = null
         ) {
             $this->_driver->authorize($options, $redirectHandler);
         }
