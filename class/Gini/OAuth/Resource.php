@@ -14,8 +14,8 @@ namespace Gini\OAuth {
 
         public function __construct($access_token)
         {
-            $storageConfig = (array) \Gini\Config::get('oauth.server')['storage'];
-            $sessionBackend = $storageConfig['session'] ?: $storageConfig['default'] ?: 'database';
+            $storageConfig = (array) (\Gini\Config::get('oauth.server')['storage'] ?? []);
+            $sessionBackend = $storageConfig['session'] ?? $storageConfig['default'] ?? 'database';
             $this->_session = \Gini\IoC::construct('\Gini\OAuth\Storage\\' . $sessionBackend);
 
             try {

@@ -16,15 +16,15 @@ namespace Gini\OAuth {
         public function __construct()
         {
             // ClientInterface $client, SessionInterface $session, ScopeInterface $scope
-            $storageConfig = (array) \Gini\Config::get('oauth.server')['storage'];
+            $storageConfig = (array) (\Gini\Config::get('oauth.server')['storage'] ?? []);
 
-            $sessionBackend = $storageConfig['session'] ?: $storageConfig['default'] ?: 'database';
+            $sessionBackend = $storageConfig['session'] ?? $storageConfig['default'] ?? 'database';
             $this->_session = \Gini\IoC::construct('\Gini\OAuth\Storage\\' . $sessionBackend);
 
-            $clientBackend = $storageConfig['client'] ?: $storageConfig['default'] ?: 'database';
+            $clientBackend = $storageConfig['client'] ?? $storageConfig['default'] ?? 'database';
             $this->_client = \Gini\IoC::construct('\Gini\OAuth\Storage\\' . $clientBackend);
 
-            $scopeBackend = $storageConfig['scope'] ?: $storageConfig['default'] ?: 'database';
+            $scopeBackend = $storageConfig['scope'] ?? $storageConfig['default'] ?? 'database';
             $this->_scope = \Gini\IoC::construct('\Gini\OAuth\Storage\\' . $scopeBackend);
         }
 
