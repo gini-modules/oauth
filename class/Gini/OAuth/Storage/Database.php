@@ -10,6 +10,12 @@ namespace Gini\OAuth\Storage {
 
         public function __construct($name = null)
         {
+            if (!$name) {
+                $name = \Gini\Config::get('oauth.server')['database'] ?? null;
+                if (!$name && \Gini\Config::get('database.gateway')) {
+                    $name = 'gateway';
+                }
+            }
             $this->_db = \Gini\Database::db($name);
         }
 
