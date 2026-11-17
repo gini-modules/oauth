@@ -8,7 +8,7 @@ use \League\OAuth2\Client\Provider\ResourceOwnerInterface;
 use \League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use \Psr\Http\Message\ResponseInterface;
 
-class GiniOwner implements ResourceOwnerInterface
+class GiniOwner implements ResourceOwnerInterface, \ArrayAccess
 {
     /**
      * @var array
@@ -46,6 +46,26 @@ class GiniOwner implements ResourceOwnerInterface
     public function toArray()
     {
         return $this->response;
+    }
+
+    public function offsetExists(mixed $offset): bool
+    {
+        return isset($this->response[$offset]);
+    }
+
+    public function offsetGet(mixed $offset): mixed
+    {
+        return $this->response[$offset] ?? null;
+    }
+
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        $this->response[$offset] = $value;
+    }
+
+    public function offsetUnset(mixed $offset): void
+    {
+        unset($this->response[$offset]);
     }
 }
 
@@ -87,7 +107,7 @@ class Gini extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-        return URL($this->options['owner'] ?: $this->options['user'], ['access_token' => (string) $token]);
+        return URL(($this->options['owner'] ?? null) ?: $this->options['user'], ['access_token' => (string) $token]);
     }
 
     /**

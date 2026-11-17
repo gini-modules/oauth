@@ -5,6 +5,7 @@ namespace Gini\OAuth {
     class Client
     {
         private $_source;
+        private $_source_name;
         private $_token;
 
         private $_driver;
@@ -27,7 +28,7 @@ namespace Gini\OAuth {
             }
 
             $options = (array) \Gini\Config::get('oauth.client')['servers'][$source_name];
-            $authUri = \Gini\Config::get('oauth.client')['auth_uri'] ?: 'oauth/client/auth';
+            $authUri = (\Gini\Config::get('oauth.client')['auth_uri'] ?? null) ?: 'oauth/client/auth';
             $driver_class = '\Gini\OAuth\Client\\' . ($options['driver'] ?: 'Unknown');
 
             $this->_driver = \Gini\IoC::construct($driver_class, [
@@ -54,7 +55,7 @@ namespace Gini\OAuth {
         public function getAccessToken($options = [])
         {
             if (!$this->_token && $this->_try_redirect) {
-                $authUri = \Gini\Config::get('oauth.client')['auth_uri'] ?: 'oauth/client/auth';
+                $authUri = (\Gini\Config::get('oauth.client')['auth_uri'] ?? null) ?: 'oauth/client/auth';
                 if (\Gini\CGI::route() != $authUri) {
                     $params = array_merge($options, [
                         'source' => $this->_source,
